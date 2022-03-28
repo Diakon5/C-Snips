@@ -11,9 +11,8 @@ namespace Challenge1 // Note: actual namespace depends on the project name.
     }
     class ArrayMatrix
     {
-        static readonly int size = 11;
-        private float[] matrix = new float[size*size];
-
+        private static readonly int size = 11;
+        private readonly float[] matrix = new float[size * size];
         public void Initialize()
         {
             Random random = new();
