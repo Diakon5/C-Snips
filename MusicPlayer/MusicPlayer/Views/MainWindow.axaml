@@ -8,5 +8,5 @@
         x:Class="MusicPlayer.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="MusicPlayer">
-        <views:MainView />
+        <views:PlayerView />
 </Window>
