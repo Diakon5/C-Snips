@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:MusicPlayer.ViewModels"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1280"
+			 xmlns:uc="clr-namespace:MusicPlayer.Views;assembly=MusicPlayer"
              x:Class="MusicPlayer.Views.MainView"
              x:DataType="vm:MainViewModel">
   <Design.DataContext>
@@ -11,8 +12,15 @@
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
     <vm:MainViewModel />
   </Design.DataContext>
-	<StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
-		<TextBlock Text="{Binding Greeting}" />
-		<Button>Click me! I do nothing!</Button>
-	</StackPanel>
+	<DockPanel>
+			<uc:NavMenuView DockPanel.Dock="Bottom" />
+		
+		<uc:PlayerView DockPanel.Dock="Bottom" />
+		<Rectangle Fill="Aqua"></Rectangle>
+	</DockPanel>
+
+
+	<!--
+-->
+
 </UserControl>
