@@ -12,12 +12,16 @@
          to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
     <vm:MainViewModel />
   </Design.DataContext>
-	<DockPanel>
-			<uc:NavMenuView DockPanel.Dock="Bottom" />
+	<Grid ColumnDefinitions="*"
+		  RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*">
+		<uc:NavMenuView DockPanel.Dock="Bottom" Grid.Row="16"/>
+
+		<uc:PlayerView DockPanel.Dock="Bottom"
+					   Grid.ColumnSpan="8"
+					   Grid.RowSpan="3" Grid.Row="12"/>
+		<Rectangle Fill="Aqua" Grid.ColumnSpan="8" Grid.RowSpan="12"/>
+	</Grid>
 		
-		<uc:PlayerView DockPanel.Dock="Bottom" />
-		<Rectangle Fill="Aqua"></Rectangle>
-	</DockPanel>
 
 
 	<!--
