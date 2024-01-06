@@ -2,13 +2,14 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              x:Class="MusicPlayer.App"
              RequestedThemeVariant="Default"
-			 xmlns:converters="clr-namespace:MusicPlayer.Converters;assembly=MusicPlayer">
+			 xmlns:local="using:MusicPlayer">
              <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.Styles>
         <FluentTheme />
+		<StyleInclude Source="avares://MusicPlayer/Icons.axaml" />
     </Application.Styles>
-	<Application.Resources>
-		<converters:DividerConverter x:Key="DivisionConverter"/>
-	</Application.Resources>
+	<Application.DataTemplates>
+		<local:ViewLocator/>
+	</Application.DataTemplates>
 </Application>

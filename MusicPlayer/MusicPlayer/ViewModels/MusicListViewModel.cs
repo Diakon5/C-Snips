@@ -1,4 +1,6 @@
 ﻿using MusicPlayer.Models;
+using MusicPlayer.Services;
+using ReactiveUI;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,13 +12,21 @@ namespace MusicPlayer.ViewModels
 {
     public class MusicListViewModel : ViewModelBase
     {
-            
-        public MusicListViewModel(IEnumerable<MusicItem> items)
+        private IFetchMusicService _fetchMusicService;
+        public MusicListViewModel(IFetchMusicService fetchMusic)
         {
-            ListItems = new ObservableCollection<MusicItem>(items);
+            _fetchMusicService = fetchMusic;
+            Items = (ObservableCollection<MusicItemViewModel>)_fetchMusicService.GetMusicItems();
         }
 
-        public ObservableCollection<MusicItem> ListItems { get; }
+        private MusicItemViewModel? _selectedItem;
+
+        public MusicItemViewModel? SelectedItem
+        {
+            get => _selectedItem;
+            set => this.RaiseAndSetIfChanged(ref _selectedItem, value);
+        }
+        public ObservableCollection<MusicItemViewModel> Items { get; }
     }
 }
 

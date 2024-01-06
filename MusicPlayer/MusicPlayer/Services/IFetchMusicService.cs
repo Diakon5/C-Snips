@@ -1,4 +1,5 @@
 ﻿using MusicPlayer.Models;
+using MusicPlayer.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace MusicPlayer.Services
 {
-    public abstract class FetchMusicService
+    public interface  IFetchMusicService
     {
-        abstract public IEnumerable<MusicItem> GetItems();
+        public IEnumerable<MusicItemViewModel> GetMusicItems();
+        
     }
 }

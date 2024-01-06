@@ -3,23 +3,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:vm="clr-namespace:MusicPlayer.ViewModels"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="1280"
+             mc:Ignorable="d" d:DesignWidth="720" d:DesignHeight="1280"
 			 xmlns:uc="clr-namespace:MusicPlayer.Views;assembly=MusicPlayer"
              x:Class="MusicPlayer.Views.MainView"
              x:DataType="vm:MainViewModel">
-  <Design.DataContext>
-    <!-- This only sets the DataContext for the previewer in an IDE,
-         to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-    <vm:MainViewModel />
-  </Design.DataContext>
 	<Grid ColumnDefinitions="*"
 		  RowDefinitions="*,*,*,*,*,*,*,*,*,*,*,*,*,*,*,*">
+		
 		<uc:NavMenuView DockPanel.Dock="Bottom" Grid.Row="16"/>
 
-		<uc:PlayerView DockPanel.Dock="Bottom"
+		<!--<uc:PlayerView DockPanel.Dock="Bottom"
 					   Grid.ColumnSpan="8"
-					   Grid.RowSpan="3" Grid.Row="12" ZIndex="1"/>
-		<Rectangle Fill="Aqua" Grid.ColumnSpan="8" Grid.RowSpan="15"/>
+					   Grid.RowSpan="3" Grid.Row="12" ZIndex="1"/>-->
+		<uc:MusicListView Grid.ColumnSpan="8" Grid.RowSpan="15" DataContext="{Binding MusicList}"/>
 	</Grid>
 		
 
