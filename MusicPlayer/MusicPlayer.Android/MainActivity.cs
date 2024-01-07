@@ -5,6 +5,9 @@ using Avalonia;
 using Avalonia.Android;
 using Avalonia.ReactiveUI;
 using System;
+using Android.OS;
+using Plugin.CurrentActivity;
+using System.Reflection.Metadata;
 
 namespace MusicPlayer.Android;
 
@@ -23,8 +26,14 @@ public class MainActivity : AvaloniaMainActivity<App>
             Bootstrapper.RegisterLazySingleton<IFetchMusicService, FetchMusicService>(Splat.Locator.CurrentMutable, Splat.Locator.Current);
         };
     }
+    public override void OnCreate(Bundle? savedInstanceState, PersistableBundle? persistentState)
+    {
+        CrossCurrentActivity.Current.Init(this, savedInstanceState);
+        base.OnCreate(savedInstanceState, persistentState);
+    }
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
+
         return base.CustomizeAppBuilder(builder)
             .WithInterFont()
             .UseReactiveUI().AfterPlatformServicesSetup(UseBootstrapper()); ;
