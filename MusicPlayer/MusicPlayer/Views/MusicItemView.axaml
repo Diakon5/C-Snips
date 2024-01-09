@@ -15,6 +15,6 @@
 				</Panel>
 			</Panel>
 		</Border>
-		<TextBlock Text = "{Binding Title}"/>
+		<TextBlock Text = "{Binding Title}" MaxWidth="500" TextWrapping="Wrap"/>
 	</StackPanel>
 </UserControl>
