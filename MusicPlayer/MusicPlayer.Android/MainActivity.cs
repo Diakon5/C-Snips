@@ -8,6 +8,8 @@ using System;
 using Android.OS;
 using Plugin.CurrentActivity;
 using System.Reflection.Metadata;
+using AndroidX.Core.Content;
+using Android;
 
 namespace MusicPlayer.Android;
 
@@ -28,14 +30,19 @@ public class MainActivity : AvaloniaMainActivity<App>
     }
     public override void OnCreate(Bundle? savedInstanceState, PersistableBundle? persistentState)
     {
+
         CrossCurrentActivity.Current.Init(this, savedInstanceState);
         base.OnCreate(savedInstanceState, persistentState);
+        if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.ReadExternalStorage) != (int)Permission.Granted)
+        {
+            RequestPermissions(new string[] { Manifest.Permission.ReadExternalStorage }, 0);
+        }
     }
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
 
         return base.CustomizeAppBuilder(builder)
             .WithInterFont()
-            .UseReactiveUI().AfterPlatformServicesSetup(UseBootstrapper()); ;
+            .UseReactiveUI().AfterPlatformServicesSetup(UseBootstrapper());
     }
 }

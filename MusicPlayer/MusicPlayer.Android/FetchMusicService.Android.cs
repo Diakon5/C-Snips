@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using AndroidGlobal = global::Android;
+using Android.App;
 using Android.Content;
 using Android.Media;
 using Android.Provider;
@@ -12,7 +13,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Xamarin.Android;
+using XamarinAndroid = Xamarin.Android;
 using Xamarin.Essentials;
 
 namespace MusicPlayer.Android
@@ -23,10 +24,24 @@ namespace MusicPlayer.Android
         {
             //MediaStore.Audio.Media.InterfaceConsts.Id;
             var collection = new ObservableCollection<MusicItemViewModel>();
-            using (ContentResolver resolver = CrossCurrentActivity.Current.AppContext.ContentResolver)
+            collection.Add(new MusicItemViewModel
             {
-                var uri = MediaStore.Audio.Media.ExternalContentUri;
-                var cursor = resolver.Query(uri, null, null, null, null);
+                Title = AndroidGlobal.OS.Environment.ExternalStorageDirectory.ToString()
+            });
+            /*using (ContentResolver resolver = CrossCurrentActivity.Current.AppContext.ContentResolver)
+            {
+                global::Android.Net.Uri? uri = MediaStore.Audio.Media.ExternalContentUri;
+                String selection = MediaStore.Audio.Media.InterfaceConsts.IsMusic + " != 0";
+
+                String[] projection = {
+    MediaStore.Audio.Media.InterfaceConsts.Id,
+    MediaStore.Audio.Media.InterfaceConsts.Artist,
+    MediaStore.Audio.Media.InterfaceConsts.Title,
+    MediaStore.Audio.Media.InterfaceConsts.Data,
+    MediaStore.Audio.Media.InterfaceConsts.DisplayName,
+    MediaStore.Audio.Media.InterfaceConsts.Duration
+};
+                var cursor = resolver.Query(uri, null, selection, null, null);
                 if (cursor == null)
                 {
                     // query failed, handle error.
@@ -53,7 +68,7 @@ namespace MusicPlayer.Android
                     } while (cursor.MoveToNext());
                 }
             }
-
+            */
             /*return new ObservableCollection<MusicItemViewModel> {
                 new MusicItemViewModel { Title = "Dummy Android 1" },
                 new MusicItemViewModel { Title = "Dummy Android 2" }
