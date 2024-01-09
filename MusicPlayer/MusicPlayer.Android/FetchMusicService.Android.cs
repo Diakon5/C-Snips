@@ -47,7 +47,20 @@ namespace MusicPlayer.Android
         }
         List<string> RecursiveSafeFolderSearch(string path)
         {
-            return new List<string>();
+            List<string> list = new List<string>();
+            try
+            {
+                list.AddRange(Directory.GetFiles(path));
+                foreach (var dir in Directory.GetDirectories(path))
+                {
+                    list.AddRange(RecursiveSafeFolderSearch(dir));
+                }
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                //okay, we can't go there. Can't read this place
+            }
+            return list;
         }
 
         public IEnumerable<MusicItemViewModel> GetMusicItems()
@@ -67,8 +80,9 @@ namespace MusicPlayer.Android
             FilesAndDirs.AddRange(GetAllMountedStorages());
             foreach (var filepath in FilesAndDirs)
             {
-                var files = Directory.GetFiles(filepath, "*.mp3",SearchOption.AllDirectories);
-                foreach (var file in files)
+                //var files = Directory.GetFiles(filepath, "*.mp3",SearchOption.AllDirectories);
+                var files = RecursiveSafeFolderSearch(filepath);
+                foreach (string file in files)
                 {
                     collection.Add(new MusicItemViewModel
                     {
