@@ -10,6 +10,7 @@ using Plugin.CurrentActivity;
 using System.Reflection.Metadata;
 using AndroidX.Core.Content;
 using Android;
+using Android.Content;
 
 namespace MusicPlayer.Android;
 
@@ -33,14 +34,21 @@ public class MainActivity : AvaloniaMainActivity<App>
 
         CrossCurrentActivity.Current.Init(this, savedInstanceState);
         base.OnCreate(savedInstanceState, persistentState);
-        if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.ReadExternalStorage) != (int)Permission.Granted)
-        {
-            RequestPermissions(new string[] { Manifest.Permission.ReadExternalStorage }, 0);
-        }
     }
     protected override AppBuilder CustomizeAppBuilder(AppBuilder builder)
     {
-
+        if (ContextCompat.CheckSelfPermission(this, global::Android.Manifest.Permission.ReadExternalStorage) != Permission.Granted)
+        {
+            RequestPermissions(new string[] { global::Android.Manifest.Permission.ReadExternalStorage }, 0);
+        }
+        if (ContextCompat.CheckSelfPermission(this, global::Android.Manifest.Permission.WriteExternalStorage) != Permission.Granted)
+        {
+            RequestPermissions(new string[] { global::Android.Manifest.Permission.WriteExternalStorage }, 0);
+        }
+        if (ContextCompat.CheckSelfPermission(this, global::Android.Manifest.Permission.ManageExternalStorage) != Permission.Granted)
+        {
+            RequestPermissions(new string[] { global::Android.Manifest.Permission.ManageExternalStorage }, 0);
+        }
         return base.CustomizeAppBuilder(builder)
             .WithInterFont()
             .UseReactiveUI().AfterPlatformServicesSetup(UseBootstrapper());

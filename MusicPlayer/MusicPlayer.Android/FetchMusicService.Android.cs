@@ -1,4 +1,5 @@
-﻿using AndroidGlobal = global::Android;
+﻿//using AndroidGlobal = global::Android;
+using Android;
 using MusicPlayer.Models;
 using MusicPlayer.Services;
 using MusicPlayer.ViewModels;
@@ -10,12 +11,15 @@ using Xamarin.Essentials;
 using System.Linq;
 using System;
 using DynamicData;
+using Android.Content;
+using Plugin.CurrentActivity;
+using Android.Provider;
 
 namespace MusicPlayer.Android
 {
     public class FetchMusicService : IFetchMusicService
     {
-        private List<string> GetAllMountedStorages()
+        /*private List<string> GetAllMountedStorages()
         {
             var procMounts = File.ReadAllText("/proc/mounts");
             string sdCardEntry = string.Empty;
@@ -47,35 +51,39 @@ namespace MusicPlayer.Android
         }
         List<string> RecursiveSafeFolderSearch(string path)
         {
-            List<string> list = new List<string>();
+            List<string> list;
+            if (!global::Android.OS.Environment.IsExternalStorageManager)
+            {
+                Intent intent = new Intent(
+                global::Android.Provider.Settings.ActionManageAppAllFilesAccessPermission,
+                global::Android.Net.Uri.Parse("package:" + global::Android.App.Application.Context.PackageName));
+
+                intent.AddFlags(ActivityFlags.NewTask);
+
+                global::Android.App.Application.Context.StartActivity(intent);
+            }
             try
             {
-                list.AddRange(Directory.GetFiles(path));
+                list = Directory.GetFiles(path).ToList();
+                System.Console.WriteLine(list);
                 foreach (var dir in Directory.GetDirectories(path))
                 {
                     list.AddRange(RecursiveSafeFolderSearch(dir));
                 }
+                return list;
             }
             catch (UnauthorizedAccessException ex)
             {
                 //okay, we can't go there. Can't read this place
             }
-            return list;
-        }
+            return new List<string>();
+        }*/
 
         public IEnumerable<MusicItemViewModel> GetMusicItems()
         {
             //MediaStore.Audio.Media.InterfaceConsts.Id;
             var collection = new ObservableCollection<MusicItemViewModel>();
-            /*collection.Add(new MusicItemViewModel
-            {
-                Title = AndroidGlobal.OS.Environment.ExternalStorageDirectory.ToString()
-            });
-            collection.Add(new MusicItemViewModel
-            {
-                Title = AndroidGlobal.OS.Environment.StorageDirectory.ToString()
-            });*/
-            List<string> FilesAndDirs = new List<string>();
+            /*List<string> FilesAndDirs = new List<string>();
             //FilesAndDirs.AddRange(Directory.EnumerateFileSystemEntries(AndroidGlobal.OS.Environment.ExternalStorageDirectory.ToString()));
             FilesAndDirs.AddRange(GetAllMountedStorages());
             foreach (var filepath in FilesAndDirs)
@@ -89,12 +97,12 @@ namespace MusicPlayer.Android
                         Title = file
                     });
                 }
-            }
-            /*using (ContentResolver resolver = CrossCurrentActivity.Current.AppContext.ContentResolver)
+            }*/
+            using (ContentResolver resolver = CrossCurrentActivity.Current.AppContext.ContentResolver)
             {
                 global::Android.Net.Uri? uri = MediaStore.Audio.Media.ExternalContentUri;
                 String selection = MediaStore.Audio.Media.InterfaceConsts.IsMusic + " != 0";
-
+                
                 String[] projection = {
     MediaStore.Audio.Media.InterfaceConsts.Id,
     MediaStore.Audio.Media.InterfaceConsts.Artist,
@@ -103,7 +111,7 @@ namespace MusicPlayer.Android
     MediaStore.Audio.Media.InterfaceConsts.DisplayName,
     MediaStore.Audio.Media.InterfaceConsts.Duration
 };
-                var cursor = resolver.Query(uri, null, selection, null, null);
+                var cursor = resolver.Query(uri, null, null, null, null);
                 if (cursor == null)
                 {
                     // query failed, handle error.
@@ -130,7 +138,7 @@ namespace MusicPlayer.Android
                     } while (cursor.MoveToNext());
                 }
             }
-            */
+            
             /*return new ObservableCollection<MusicItemViewModel> {
                 new MusicItemViewModel { Title = "Dummy Android 1" },
                 new MusicItemViewModel { Title = "Dummy Android 2" }
