@@ -1,5 +1,6 @@
 ﻿//using AndroidGlobal = global::Android;
 using Android;
+using AndroidGlobal = global::Android;
 using MusicPlayer.Models;
 using MusicPlayer.Services;
 using MusicPlayer.ViewModels;
@@ -19,7 +20,8 @@ namespace MusicPlayer.Android
 {
     public class FetchMusicService : IFetchMusicService
     {
-        /*private List<string> GetAllMountedStorages()
+        ///*
+        private List<string> GetAllMountedStorages()
         {
             var procMounts = File.ReadAllText("/proc/mounts");
             string sdCardEntry = string.Empty;
@@ -52,19 +54,21 @@ namespace MusicPlayer.Android
         List<string> RecursiveSafeFolderSearch(string path)
         {
             List<string> list;
-            if (!global::Android.OS.Environment.IsExternalStorageManager)
+           ///*
+            if (!AndroidGlobal.OS.Environment.IsExternalStorageManager)
             {
                 Intent intent = new Intent(
-                global::Android.Provider.Settings.ActionManageAppAllFilesAccessPermission,
-                global::Android.Net.Uri.Parse("package:" + global::Android.App.Application.Context.PackageName));
+                AndroidGlobal.Provider.Settings.ActionManageAppAllFilesAccessPermission,
+                AndroidGlobal.Net.Uri.Parse("package:" + AndroidGlobal.App.Application.Context.PackageName));
 
                 intent.AddFlags(ActivityFlags.NewTask);
 
-                global::Android.App.Application.Context.StartActivity(intent);
+                AndroidGlobal.App.Application.Context.StartActivity(intent);
             }
+            //*/
             try
             {
-                list = Directory.GetFiles(path).ToList();
+                list = Directory.GetFiles(path,"*.mp3").ToList();
                 System.Console.WriteLine(list);
                 foreach (var dir in Directory.GetDirectories(path))
                 {
@@ -76,14 +80,20 @@ namespace MusicPlayer.Android
             {
                 //okay, we can't go there. Can't read this place
             }
+            catch(DirectoryNotFoundException
+            ex)
+            {
+                //I don't know
+            }
             return new List<string>();
-        }*/
+        }
+        //*/
 
         public IEnumerable<MusicItemViewModel> GetMusicItems()
         {
             //MediaStore.Audio.Media.InterfaceConsts.Id;
             var collection = new ObservableCollection<MusicItemViewModel>();
-            /*List<string> FilesAndDirs = new List<string>();
+            List<string> FilesAndDirs = new List<string>();
             //FilesAndDirs.AddRange(Directory.EnumerateFileSystemEntries(AndroidGlobal.OS.Environment.ExternalStorageDirectory.ToString()));
             FilesAndDirs.AddRange(GetAllMountedStorages());
             foreach (var filepath in FilesAndDirs)
@@ -97,7 +107,9 @@ namespace MusicPlayer.Android
                         Title = file
                     });
                 }
-            }*/
+            }
+            //*/
+            /*
             using (ContentResolver resolver = CrossCurrentActivity.Current.AppContext.ContentResolver)
             {
                 global::Android.Net.Uri? uri = MediaStore.Audio.Media.ExternalContentUri;
@@ -138,7 +150,7 @@ namespace MusicPlayer.Android
                     } while (cursor.MoveToNext());
                 }
             }
-            
+            //*/
             /*return new ObservableCollection<MusicItemViewModel> {
                 new MusicItemViewModel { Title = "Dummy Android 1" },
                 new MusicItemViewModel { Title = "Dummy Android 2" }
