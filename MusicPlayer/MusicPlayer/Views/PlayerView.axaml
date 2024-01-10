@@ -6,9 +6,11 @@
 			 "
              x:Class="MusicPlayer.Views.PlayerView">
 	<Grid ShowGridLines="False" ColumnDefinitions="*,*,*,*,*,*,*" VerticalAlignment="Center" RowDefinitions="Auto,*" Margin="50 0 50 0">
-		<TextBlock Grid.Column="1" Grid.Row="0" TextAlignment="End" VerticalAlignment="Center" >TimeCurrent</TextBlock>
-		<Slider Grid.Column="2" Grid.ColumnSpan="3" VerticalAlignment="Center" Grid.Row="0"></Slider>
-		<TextBlock Grid.Column="5" Grid.Row="0" VerticalAlignment="Center">TimeMax</TextBlock>
+		<Rectangle Grid.Column="0" Grid.ColumnSpan="10" 
+				   Grid.Row="0" Grid.RowSpan="5" Fill="Gray"/>
+		<TextBlock Grid.Column="0" Grid.Row="0" TextAlignment="End" VerticalAlignment="Center" >TimeCurrent</TextBlock>
+		<Slider Grid.Column="1" Grid.ColumnSpan="5" VerticalAlignment="Center" Grid.Row="0"></Slider>
+		<TextBlock Grid.Column="6" Grid.Row="0" VerticalAlignment="Center">TimeMax</TextBlock>
 		<Button Grid.Column="1" Grid.Row="1">
 			<Image Source="/Assets/Random.png" />
 		</Button>
