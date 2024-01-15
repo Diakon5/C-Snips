@@ -2,9 +2,10 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="200
-			 "
-             x:Class="MusicPlayer.Views.PlayerView">
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="200"
+			 xmlns:vm="using:MusicPlayer.ViewModels"
+             x:Class="MusicPlayer.Views.PlayerView"
+			 x:DataType="vm:PlayerViewModel">
 	<Grid ShowGridLines="False" ColumnDefinitions="*,*,*,*,*,*,*" VerticalAlignment="Center" RowDefinitions="Auto,*" Margin="50 0 50 0">
 		<Rectangle Grid.Column="0" Grid.ColumnSpan="10" 
 				   Grid.Row="0" Grid.RowSpan="5" Fill="Gray"/>

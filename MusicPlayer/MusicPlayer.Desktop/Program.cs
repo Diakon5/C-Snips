@@ -13,6 +13,7 @@ class Program
         return (_) =>
         {
             Bootstrapper.RegisterLazySingleton<IFetchMusicService, FetchMusicService>(Locator.CurrentMutable, Locator.Current);
+            Bootstrapper.RegisterLazySingleton<IMusicPlayer, MusicPlayer>(Locator.CurrentMutable, Locator.Current);
             //Locator.CurrentMutable.Register(() => new MusicListViewModel(Locator.Current.GetRequiredService<IFetchMusicService>()));
         };
     }

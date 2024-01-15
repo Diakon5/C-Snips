@@ -27,6 +27,7 @@ public class MainActivity : AvaloniaMainActivity<App>
         return (_) =>
         {
             Bootstrapper.RegisterLazySingleton<IFetchMusicService, FetchMusicService>(Splat.Locator.CurrentMutable, Splat.Locator.Current);
+            Bootstrapper.RegisterLazySingleton<IMusicPlayer, MusicPlayer>(Splat.Locator.CurrentMutable, Splat.Locator.Current);
         };
     }
     public override void OnCreate(Bundle? savedInstanceState, PersistableBundle? persistentState)
