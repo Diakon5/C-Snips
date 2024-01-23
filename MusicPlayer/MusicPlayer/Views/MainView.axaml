@@ -12,10 +12,10 @@
 		
 		<uc:NavMenuView DockPanel.Dock="Bottom" Grid.Row="16"/>
 
-		<!--<uc:PlayerView DockPanel.Dock="Bottom"
+		<uc:PlayerView DockPanel.Dock="Bottom"
 					   Grid.ColumnSpan="8"
-					   Grid.RowSpan="3" Grid.Row="12" ZIndex="1"/>-->
-		<uc:MusicListView Grid.ColumnSpan="8" Grid.RowSpan="15" DataContext="{Binding MusicList}"/>
+					   Grid.RowSpan="3" Grid.Row="12" ZIndex="1"/>
+		<uc:MusicListView Grid.ColumnSpan="8" Grid.RowSpan="12" DataContext="{Binding MusicList}"/>
 	</Grid>
 		
 

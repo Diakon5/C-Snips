@@ -8,12 +8,13 @@ namespace MusicPlayer.ViewModels;
 
 public class MainViewModel : ViewModelBase
 {
-    private ViewModelBase _viewModel;
     public MainViewModel()
     {
         var resolver = Splat.Locator.GetLocator();
         MusicList = new MusicListViewModel(resolver.GetRequiredService<IFetchMusicService>());
         MusicList.PropertyChanged += MusicList_PropertyChanged;
+        Player = new PlayerViewModel(resolver.GetRequiredService<IMusicPlayer>());
+
     }
 
     private void MusicList_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -23,14 +24,10 @@ public class MainViewModel : ViewModelBase
             OnSelectedItemChange();
         }
     }
-    public ViewModelBase ContentViewModel
-    {
-        get => _viewModel;
-        private set => this.RaiseAndSetIfChanged(ref _viewModel, value);
-    }
     private void OnSelectedItemChange()
     {
-
+        Player.Play(MusicList.SelectedItem.LocalPath);
     }
     public MusicListViewModel MusicList { get; }
+    public PlayerViewModel Player { get; }
 }

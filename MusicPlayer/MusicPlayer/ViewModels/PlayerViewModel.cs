@@ -18,7 +18,23 @@ namespace MusicPlayer.ViewModels
         public PlayerViewModel(IMusicPlayer musicPlayer)
         {
             _musicPlayerService = musicPlayer;
+            playCommand = ReactiveCommand.Create(() => {_musicPlayerService.Play(null); });
+            pauseCommand = ReactiveCommand.Create(() => {_musicPlayerService.Pause(); });
         }
-         
+
+        public void Play(string path)
+        {
+            _musicPlayerService.Play(path);
+        }
+
+        public void Play()
+        {
+            _musicPlayerService.Play(null);
+        }
+
+        public void Pause()
+        {
+            _musicPlayerService.Pause();
+        }
     }
 }
