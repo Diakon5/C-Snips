@@ -39,12 +39,10 @@ namespace AspCoreApiContro.Databases
       {
 
          SQLiteCommand sqlite_cmd;
-         string Createsql = "CREATE TABLE SampleTable (Col1 VARCHAR(20), Col2 INT)";
-         string Createsql1 = "CREATE TABLE SampleTable1 (Col1 VARCHAR(20), Col2 INT)";
+         string MessagesTable = "CREATE TABLE WallMessages (MessageID INT PRIMARY KEY NOT NULL AUTO_INCREMENT, ResponseTo INT, Author INT NOT NULL, PostingTime DATETIME NOT NULL, ModifyTime DATETIME, Message TEXT )";
+         string UsersTables = "CREATE TABLE";
          sqlite_cmd = conn.CreateCommand();
-         sqlite_cmd.CommandText = Createsql;
-         sqlite_cmd.ExecuteNonQuery();
-         sqlite_cmd.CommandText = Createsql1;
+         sqlite_cmd.CommandText = MessagesTable;
          sqlite_cmd.ExecuteNonQuery();
 
       }
