@@ -1,3 +1,4 @@
+using AspCoreApiContro.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AspCoreApiContro.Controllers
