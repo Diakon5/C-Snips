@@ -29,5 +29,20 @@ namespace AspCoreApiContro.Controllers
             })
             .ToArray();
         }
+        [HttpPost]
+        public WallMessage Post(WallMessageDTO message)
+        {
+        var wallMessage = new WallMessage
+        {
+            messageID = message.messageID,
+            RespondingTo_ID = message.RespondingTo_ID,
+            PostingDate = message.PostingDate,
+            LastEditDate = null,
+            Message = message.Message,
+            Author_ID = message.Author_ID
+        };
+        SQLiteDatabase.AddMessage(wallMessage);
+        return wallMessage;
+        }
     }
 }
