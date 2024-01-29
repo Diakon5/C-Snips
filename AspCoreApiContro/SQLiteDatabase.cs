@@ -47,17 +47,17 @@ namespace AspCoreApiContro
                 amountFilter = $" TOP {amount}";
             }
             SqliteCommand sqliteCommand = _connection.CreateCommand();
-            sqliteCommand.CommandText = $"SELECT{amountFilter} * FROM WallMessages";
+            sqliteCommand.CommandText = $"SELECT{amountFilter} * FROM WallMessages ORDER BY posting_date DESC";
             return sqliteCommand.ExecuteReader();
         }
         public static void AddMessage(WallMessage message)
         {
             SqliteCommand sqliteCommand = _connection.CreateCommand();
             sqliteCommand.CommandText = $"INSERT INTO WallMessages (NULL,%responseTo,%postingDate,%editDate,%messageAuthor,%messageText)";
-            sqliteCommand.Parameters.AddWithValue("%responseTo",message.RespondingTo?.messageID);
+            sqliteCommand.Parameters.AddWithValue("%responseTo",message.RespondingTo_ID);
             sqliteCommand.Parameters.AddWithValue("%postingDate", message.PostingDate);
             sqliteCommand.Parameters.AddWithValue("%editDate", message.LastEditDate);
-            sqliteCommand.Parameters.AddWithValue("%messageAuthor", message.Author.userID);
+            sqliteCommand.Parameters.AddWithValue("%messageAuthor", message.Author_ID);
             sqliteCommand.Parameters.AddWithValue("%messageText", message.Message);
             sqliteCommand.ExecuteNonQuery();
         }
