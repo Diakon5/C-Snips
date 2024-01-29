@@ -3,10 +3,10 @@ using Microsoft.Data.Sqlite;
 using System.Security.Cryptography;
 namespace AspCoreApiContro
 {
-    public class SQLiteDatabase
+    public static class SQLiteDatabase
     {
-        private SqliteConnection _connection;
-        public SQLiteDatabase()
+        private static SqliteConnection _connection;
+        static SQLiteDatabase()
         {
             _connection = new SqliteConnection("Data Source=hello.db");
             _connection.Open();
@@ -28,7 +28,7 @@ namespace AspCoreApiContro
             createTables.ExecuteNonQuery();
         }
 
-        public SqliteDataReader GetUsers(string? username = null)
+        public static SqliteDataReader GetUsers(string? username = null)
         {
             string usernameFilter = "";
             if (username != null)
@@ -39,7 +39,7 @@ namespace AspCoreApiContro
             sqliteCommand.CommandText = $"SELECT * FROM WallUsers{username}";
             return sqliteCommand.ExecuteReader();
         }
-        public SqliteDataReader GetMessages(int? amount= null)
+        public static SqliteDataReader GetMessages(int? amount= null)
         {
             string amountFilter = "";
             if (amount != null)
@@ -50,7 +50,7 @@ namespace AspCoreApiContro
             sqliteCommand.CommandText = $"SELECT{amountFilter} * FROM WallMessages";
             return sqliteCommand.ExecuteReader();
         }
-        public void AddMessage(WallMessage message)
+        public static void AddMessage(WallMessage message)
         {
             SqliteCommand sqliteCommand = _connection.CreateCommand();
             sqliteCommand.CommandText = $"INSERT INTO WallMessages (NULL,%responseTo,%postingDate,%editDate,%messageAuthor,%messageText)";

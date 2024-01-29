@@ -9,15 +9,15 @@ namespace AspCoreApiContro.Controllers
     {
         
         private readonly ILogger<WallMessagesController> _logger;
-
         public WallMessagesController(ILogger<WallMessagesController> logger)
         {
             _logger = logger;
         }
-                [HttpGet(Name = "GetSingleMessage")]
+        [HttpGet(Name = "GetSingleMessage")]
         public IEnumerable<WallMessage> Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WallMessage
+
+            return Enumerable.Range(1, 1).Select(index => new WallMessage
             {
 
             })
