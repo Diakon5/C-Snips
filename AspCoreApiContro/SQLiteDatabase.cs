@@ -11,14 +11,14 @@ namespace AspCoreApiContro
             _connection = new SqliteConnection("Data Source=hello.db");
             _connection.Open();
             SqliteCommand createTables = _connection.CreateCommand();
-            createTables.CommandText = "CREATE TABLE IF NOT EXISTS WallMessages (message_id int PRIMARY KEY AUTO_INCREMENT, " +
+            createTables.CommandText = "CREATE TABLE IF NOT EXISTS WallMessages (message_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                                                             "response_to_id int, " +
                                                                             "posting_date DATETIME NOT NULL, " +
                                                                             "edit_time DATETIME, " +
-                                                                            "message_author_id int NOT NULL" +
-                                                                            "message_text VARCHAR(1000)) NOT NULL";
+                                                                            "message_author_id int NOT NULL, " +
+                                                                            "message_text VARCHAR(1000) NOT NULL)";
             createTables.ExecuteNonQuery();
-            createTables.CommandText = "CREATE TABLE IF NOT EXISTS WallUsers (user_id int PRIMARY KEY AUTO_INCREMENT, " +
+            createTables.CommandText = "CREATE TABLE IF NOT EXISTS WallUsers (user_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
                                                                             "user_name VARCHAR(100) NOT NULL, " +
                                                                             "creation_date DATETIME NOT NULL, " +
                                                                             "email VARCHAR(100) NOT NULL)";
@@ -53,12 +53,12 @@ namespace AspCoreApiContro
         public static void AddMessage(WallMessage message)
         {
             SqliteCommand sqliteCommand = _connection.CreateCommand();
-            sqliteCommand.CommandText = $"INSERT INTO WallMessages (NULL,%responseTo,%postingDate,%editDate,%messageAuthor,%messageText)";
-            sqliteCommand.Parameters.AddWithValue("%responseTo",message.RespondingTo_ID);
+            sqliteCommand.CommandText = $"INSERT INTO WallMessages VALUES (null,{message.RespondingTo_ID}, '{message.PostingDate}', '{message.LastEditDate}', {message.Author_ID}, '{message.Message}')";
+            /*sqliteCommand.Parameters.AddWithValue("%responseTo",message.RespondingTo_ID);
             sqliteCommand.Parameters.AddWithValue("%postingDate", message.PostingDate);
             sqliteCommand.Parameters.AddWithValue("%editDate", message.LastEditDate);
             sqliteCommand.Parameters.AddWithValue("%messageAuthor", message.Author_ID);
-            sqliteCommand.Parameters.AddWithValue("%messageText", message.Message);
+            sqliteCommand.Parameters.AddWithValue("%messageText", message.Message);*/
             sqliteCommand.ExecuteNonQuery();
         }
 

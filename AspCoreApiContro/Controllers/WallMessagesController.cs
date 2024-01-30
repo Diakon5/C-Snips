@@ -1,3 +1,4 @@
+using System.Data;
 using AspCoreApiContro.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,11 +14,11 @@ namespace AspCoreApiContro.Controllers
         {
             _logger = logger;
         }
-        [HttpGet(Name = "GetSingleMessage")]
+        /*[HttpGet(Name = "GetSingle", Order = 0)]
         public IEnumerable<WallMessage> Get()
         {
             var reader = SQLiteDatabase.GetMessages(1);
-            reader.GetString(1);
+            reader.Read();
             return Enumerable.Range(1, 1).Select(index => new WallMessage
             {
                 messageID = reader.GetInt32(0),
@@ -28,6 +29,27 @@ namespace AspCoreApiContro.Controllers
                 Author_ID = reader.GetInt32(5),
             })
             .ToArray();
+        }*/
+        [HttpGet(Name = "GetAll",Order = 1)]
+        public IEnumerable<WallMessage> GetAll()
+        {
+            var reader = SQLiteDatabase.GetMessages();
+            List<WallMessage> list = new();
+            while (reader.Read())
+            {       
+                var message = new WallMessage
+                {
+                    messageID = reader.GetInt32(0),
+                    RespondingTo_ID = reader.GetInt32(1),
+                    PostingDate = reader.GetDateTime(2),
+                    LastEditDate = reader.GetDateTime(3),
+                    Message = reader.GetString(4),
+                    Author_ID = reader.GetInt32(5),
+                };
+                list.Add(message);
+            }
+            return list.ToArray();
+            
         }
         [HttpPost]
         public WallMessage Post(WallMessageDTO message)
@@ -37,7 +59,7 @@ namespace AspCoreApiContro.Controllers
             messageID = message.messageID,
             RespondingTo_ID = message.RespondingTo_ID,
             PostingDate = message.PostingDate,
-            LastEditDate = null,
+            LastEditDate = message.LastEditDate,
             Message = message.Message,
             Author_ID = message.Author_ID
         };
