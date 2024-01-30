@@ -1,3 +1,5 @@
+using System.Globalization;
+
 namespace AspCoreApiContro
 {
     public class Program
@@ -7,14 +9,14 @@ namespace AspCoreApiContro
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-
+            CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             
             var app = builder.Build();
-            builder.WebHost.UseUrls("https://localhost:10000");
+            builder.WebHost.UseUrls("https://192.168.1.109:10000");
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {

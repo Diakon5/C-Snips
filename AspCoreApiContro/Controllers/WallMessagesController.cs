@@ -41,10 +41,10 @@ namespace AspCoreApiContro.Controllers
                 {
                     messageID = reader.GetInt32(0),
                     RespondingTo_ID = reader.GetInt32(1),
-                    PostingDate = reader.GetDateTime(2),
-                    LastEditDate = reader.GetDateTime(3),
-                    Message = reader.GetString(4),
-                    Author_ID = reader.GetInt32(5),
+                    PostingDate = DateTime.Parse(reader.GetString(2)),
+                    LastEditDate = DateTime.Parse(reader.GetString(3)),
+                    Message = reader.GetString(5),
+                    Author_ID = reader.GetInt32(4),
                 };
                 list.Add(message);
             }
